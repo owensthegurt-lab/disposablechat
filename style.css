@@ -1,155 +1,200 @@
-* {
-
-    box-sizing: border-box;
-
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
+body{
 
+    font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
 
-body {
+    background:#313338;
 
-    margin: 0;
+    color:white;
 
-    width: 100vw;
-
-    height: 100vh;
-
-    overflow: hidden;
-
-    background: #313338;
-
-    color: white;
-
-    font-family: Arial, Helvetica, sans-serif;
+    overflow:hidden;
 
 }
-
-
 
 /*
 ====================================
-MAIN MENU
+MENU
 ====================================
 */
 
+.menu{
 
-.menu {
+    width:100vw;
+    height:100vh;
 
-    width: 100%;
+    display:flex;
 
-    height: 100vh;
+    flex-direction:column;
 
-    display: flex;
+    justify-content:center;
 
-    flex-direction: column;
+    align-items:center;
 
-    justify-content: center;
-
-    align-items: center;
-
-}
-
-
-
-
-.menu h1 {
-
-    font-size: 42px;
-
-    margin-bottom: 10px;
+    gap:20px;
 
 }
 
+.menu h1{
 
-
-
-.menu p {
-
-    color: #b5bac1;
+    font-size:48px;
 
 }
 
+.menu p{
 
+    color:#B5BAC1;
 
-
-button {
-
-    background: #5865F2;
-
-    border: none;
-
-    color: white;
-
-    padding: 12px 22px;
-
-    border-radius: 6px;
-
-    cursor: pointer;
-
-    font-size: 15px;
-
-    margin: 5px;
+    font-size:18px;
 
 }
 
+.menu-buttons{
 
+    display:flex;
 
-button:hover {
-
-    background: #4752c4;
-
-}
-
-
-
-
-
-input {
-
-
-    background: #1e1f22;
-
-    border: none;
-
-    outline: none;
-
-    color: white;
-
-    padding: 14px;
-
-    border-radius: 8px;
-
-    font-size: 16px;
+    gap:15px;
 
 }
 
+button{
 
+    background:#5865F2;
 
+    color:white;
 
+    border:none;
 
+    border-radius:8px;
+
+    padding:12px 22px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    transition:.2s;
+
+}
+
+button:hover{
+
+    background:#4752C4;
+
+    transform:translateY(-2px);
+
+}
+
+button:active{
+
+    transform:translateY(0);
+
+}
 
 /*
 ====================================
-DISCORD LAYOUT
+MODAL
 ====================================
 */
 
+.hidden{
 
-.chat-layout {
-
-
-    width: 100vw;
-
-    height: 100vh;
-
-    display: flex;
-
+    display:none !important;
 
 }
 
+#joinModal{
 
+    position:fixed;
 
+    inset:0;
 
+    background:rgba(0,0,0,.55);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.modal{
+
+    width:360px;
+
+    background:#2B2D31;
+
+    border-radius:14px;
+
+    padding:25px;
+
+}
+
+.modal h2{
+
+    margin-bottom:20px;
+
+}
+
+.modal input{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:8px;
+
+    background:#1E1F22;
+
+    color:white;
+
+    font-size:18px;
+
+    text-align:center;
+
+    letter-spacing:4px;
+
+}
+
+.modal-buttons{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:10px;
+
+    margin-top:20px;
+
+}
+
+/*
+====================================
+CHAT LAYOUT
+====================================
+*/
+
+#chat{
+
+    width:100vw;
+
+    height:100vh;
+
+    display:flex;
+
+}
 
 /*
 ====================================
@@ -157,115 +202,89 @@ SIDEBAR
 ====================================
 */
 
+#sidebar{
 
-.sidebar {
+    width:260px;
 
+    background:#2B2D31;
 
-    width: 260px;
+    display:flex;
 
-    height: 100%;
-
-    background: #2b2d31;
-
-    display: flex;
-
-    flex-direction: column;
-
+    flex-direction:column;
 
 }
 
+.server-name{
 
+    padding:20px;
 
+    font-size:22px;
 
+    font-weight:bold;
 
-.server-title {
-
-
-    height: 60px;
-
-    padding: 20px;
-
-    font-size: 18px;
-
-    font-weight: bold;
-
-    border-bottom: 1px solid #1e1f22;
-
+    border-bottom:1px solid #1E1F22;
 
 }
 
+.party-info,
 
+.member-list,
 
+.timer{
 
-
-.members {
-
-
-    flex: 1;
-
-    padding: 20px;
-
+    padding:20px;
 
 }
 
+.party-info h3,
 
+.member-list h3,
 
-.members h3 {
+.timer h3{
 
+    color:#B5BAC1;
 
-    color: #949ba4;
+    margin-bottom:10px;
 
-    font-size: 13px;
+    font-size:13px;
 
-    text-transform: uppercase;
-
-
-}
-
-
-
-.members p {
-
-
-    color: #dbdee1;
-
-    margin: 12px 0;
-
+    text-transform:uppercase;
 
 }
 
+#members{
 
+    display:flex;
 
+    flex-direction:column;
 
-
-.sidebar-bottom {
-
-
-    padding: 15px;
-
-    background: #232428;
-
+    gap:8px;
 
 }
 
+.member{
 
+    background:#383A40;
 
+    border-radius:8px;
 
-.sidebar-bottom p {
-
-
-    margin: 5px;
-
-    color: #b5bac1;
-
+    padding:10px;
 
 }
 
+#leaveBtn{
 
+    margin:20px;
 
+    background:#DA373C;
 
+}
 
+#leaveBtn:hover{
 
+    background:#B92D31;
+
+}
 
 /*
 ====================================
@@ -273,159 +292,139 @@ CHAT AREA
 ====================================
 */
 
+#chatArea{
 
-.chat {
+    flex:1;
 
+    display:flex;
 
-    flex: 1;
+    flex-direction:column;
 
-    display: flex;
-
-    flex-direction: column;
-
-
-}
-
-
-
-
-
-.chat-header {
-
-
-    height: 60px;
-
-    background: #313338;
-
-    border-bottom: 1px solid #1e1f22;
-
-    display: flex;
-
-    align-items: center;
-
-    padding-left: 20px;
-
-    font-size: 18px;
-
-    font-weight: bold;
-
+    background:#313338;
 
 }
 
+#chatHeader{
 
+    height:60px;
 
+    display:flex;
 
+    align-items:center;
 
+    padding:0 20px;
 
+    font-size:20px;
 
-.messages {
-
-
-    flex: 1;
-
-    padding: 20px;
-
-    overflow-y: auto;
-
+    border-bottom:1px solid #232428;
 
 }
 
+#messages{
 
+    flex:1;
 
+    overflow-y:auto;
 
-
-.messages p {
-
-
-    margin: 12px 0;
-
-    color: #dbdee1;
+    padding:20px;
 
 }
 
+.message{
 
-
-.messages b {
-
-
-    color: #5865F2;
-
-    margin-right: 8px;
-
+    margin-bottom:18px;
 
 }
 
+.username{
 
+    color:#6EA8FF;
 
+    font-weight:bold;
 
-
-
-
-.typing {
-
-
-    height: 25px;
-
-    padding-left: 20px;
-
-    color: #949ba4;
-
-    font-size: 14px;
-
+    margin-bottom:4px;
 
 }
 
+.messageBubble{
 
+    display:inline-block;
 
+    background:#383A40;
 
+    padding:12px 15px;
 
+    border-radius:12px;
 
+    max-width:75%;
 
-.message-box {
-
-
-    height: 70px;
-
-    background: #313338;
-
-    display: flex;
-
-    align-items: center;
-
-    padding: 15px;
-
-    gap: 10px;
-
+    word-wrap:break-word;
 
 }
 
+.system{
 
+    color:#B5BAC1;
 
+    font-style:italic;
 
-
-.message-box input {
-
-
-    flex: 1;
-
-    background: #383a40;
-
-    border-radius: 10px;
+    margin:15px 0;
 
 }
 
+#typing{
 
+    height:22px;
 
-.message-box button {
+    padding-left:20px;
 
+    color:#949BA4;
 
-    margin: 0;
+    font-size:14px;
 
 }
 
+/*
+====================================
+MESSAGE BAR
+====================================
+*/
 
+#messageBar{
 
+    padding:18px;
 
+    display:flex;
+
+    gap:12px;
+
+}
+
+#messageInput{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:12px;
+
+    background:#383A40;
+
+    color:white;
+
+    padding:14px;
+
+    font-size:15px;
+
+}
+
+#messageInput::placeholder{
+
+    color:#949BA4;
+
+}
 
 /*
 ====================================
@@ -433,19 +432,22 @@ SCROLLBAR
 ====================================
 */
 
+::-webkit-scrollbar{
 
-::-webkit-scrollbar {
-
-    width: 8px;
+    width:10px;
 
 }
 
+::-webkit-scrollbar-thumb{
 
+    background:#1E1F22;
 
-::-webkit-scrollbar-thumb {
+    border-radius:20px;
 
-    background: #1e1f22;
+}
 
-    border-radius: 10px;
+::-webkit-scrollbar-track{
+
+    background:#313338;
 
 }
