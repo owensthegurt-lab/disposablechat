@@ -28,7 +28,6 @@
         Create Party
     </button>
 
-
     <button id="joinBtn">
         Join Party
     </button>
@@ -36,7 +35,91 @@
 </div>
 
 
-<script src="./main.js"></script>
+<script>
+
+    console.log("HTML SCRIPT STARTED");
+
+
+    const menu = document.getElementById("menu");
+
+    const createBtn = document.getElementById("createBtn");
+
+    const joinBtn = document.getElementById("joinBtn");
+
+
+
+    function generateCode(){
+
+        let chars =
+        "ABCDEFGHJKLMNPQRSTUVWXYZ123456789";
+
+
+        let code = "";
+
+
+        for(let i = 0; i < 5; i++){
+
+            code += chars[
+                Math.floor(
+                    Math.random() * chars.length
+                )
+            ];
+
+        }
+
+
+        return code;
+
+    }
+
+
+
+
+    createBtn.onclick = function(){
+
+
+        console.log("Creating party");
+
+
+        let code = generateCode();
+
+
+        console.log("Generated:", code);
+
+
+
+        menu.innerHTML = `
+
+            <h1>
+                Party Created
+            </h1>
+
+            <h2>
+                ${code}
+            </h2>
+
+            <p>
+                Give this code to your friends
+            </p>
+
+
+        `;
+
+
+    };
+
+
+
+    joinBtn.onclick = function(){
+
+
+        console.log("Joining party");
+
+
+    };
+
+
+</script>
 
 
 </body>
