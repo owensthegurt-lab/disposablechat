@@ -1,359 +1,286 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Disposable Chat</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
 </head>
-
 
 <body>
 
 
-<div class="menu" id="menu">
+    <!--
+    ====================================
+    MAIN MENU
+    ====================================
+    -->
 
+    <div id="menu" class="menu">
 
-    <h1>
-        Disposable Chat
-    </h1>
+        <h1>Disposable Chat</h1>
 
+        <p>
+            Temporary parties.
+            No chat history.
+        </p>
 
-    <p>
-        Temporary conversations.
-        No history saved.
-    </p>
+        <div class="menu-buttons">
 
+            <button id="createBtn">
 
-    <button id="createBtn">
-        Create Party
-    </button>
+                Create Party
 
+            </button>
 
-    <button id="joinBtn">
-        Join Party
-    </button>
+            <button id="joinBtn">
 
+                Join Party
 
-</div>
+            </button>
 
+        </div>
 
+    </div>
 
 
 
-<script>
 
+    <!--
+    ====================================
+    JOIN PARTY MODAL
+    ====================================
+    -->
 
-console.log("DISPOSABLE CHAT LOADED");
+    <div
+        id="joinModal"
+        class="hidden"
+    >
 
+        <div class="modal">
 
+            <h2>
 
-const menu =
-document.getElementById("menu");
+                Join Party
 
+            </h2>
 
-const createBtn =
-document.getElementById("createBtn");
+            <input
 
+                id="joinCode"
 
-const joinBtn =
-document.getElementById("joinBtn");
+                maxlength="5"
 
+                placeholder="ABCDE"
 
+                autocomplete="off"
 
+            >
 
+            <div class="modal-buttons">
 
-function generateCode(){
+                <button id="confirmJoin">
 
+                    Join
 
-    const chars =
-    "ABCDEFGHJKLMNPQRSTUVWXYZ123456789";
+                </button>
 
+                <button id="cancelJoin">
 
-    let code = "";
+                    Cancel
 
+                </button>
 
-    for(let i = 0; i < 5; i++){
+            </div>
 
+        </div>
 
-        code += chars[
+    </div>
 
-            Math.floor(
 
-                Math.random() *
-                chars.length
 
-            )
 
-        ];
 
+    <!--
+    ====================================
+    CHAT
+    ====================================
+    -->
 
-    }
-
-
-    return code;
-
-}
-
-
-
-
-
-function generateUsername(){
-
-
-    const first = [
-
-        "Silent",
-        "Golden",
-        "Shadow",
-        "Frozen",
-        "Swift",
-        "Dark",
-        "Bright",
-        "Hidden",
-        "Wild",
-        "Silver"
-
-    ];
-
-
-
-    const second = [
-
-        "Wolf",
-        "Fox",
-        "River",
-        "Tree",
-        "Moon",
-        "Storm",
-        "Leaf",
-        "Bear",
-        "Fire",
-        "Cloud"
-
-    ];
-
-
-
-    return (
-
-        first[Math.floor(Math.random()*first.length)]
-
-        +
-
-        second[Math.floor(Math.random()*second.length)]
-
-    );
-
-
-}
-
-
-
-
-
-
-createBtn.onclick = function(){
-
-
-    openChat(
-        generateCode()
-    );
-
-
-};
-
-
-
-
-
-
-joinBtn.onclick = function(){
-
-
-    menu.innerHTML = `
-
-
-    <h1>
-        Join Party
-    </h1>
-
-
-    <input 
-    id="joinCode"
-    placeholder="ENTER CODE"
-    maxlength="5"
+    <div
+        id="chat"
+        class="hidden"
     >
 
 
-    <button id="joinConfirm">
 
-        Join
+        <!-- Sidebar -->
 
-    </button>
+        <aside id="sidebar">
 
 
-    `;
 
+            <div class="server-name">
 
+                Disposable Chat
 
-    document
-    .getElementById("joinConfirm")
-    .onclick = function(){
+            </div>
 
 
-        let code =
-        document
-        .getElementById("joinCode")
-        .value
-        .toUpperCase();
 
+            <div class="party-info">
 
+                <h3>
 
-        openChat(code);
+                    Party
 
+                </h3>
 
+                <p id="partyCode">
 
-    };
+                    -----
 
+                </p>
 
-};
+            </div>
 
 
 
 
+            <div class="member-list">
 
+                <h3>
 
+                    Members
 
-function openChat(code){
+                </h3>
 
+                <div id="members">
 
+                </div>
 
-const username =
-generateUsername();
+            </div>
 
 
 
 
-menu.innerHTML = `
+            <div class="timer">
 
+                <h3>
 
+                    Self Destruct
 
-<div class="chat-layout">
+                </h3>
 
+                <p id="timer">
 
+                    05:00
 
+                </p>
 
+            </div>
 
-<div class="sidebar">
 
 
-    <div class="server-title">
 
-        Party ${code}
+            <button id="leaveBtn">
 
-    </div>
+                End Chat
 
+            </button>
 
 
-    <div class="members">
 
+        </aside>
 
-        <h3>
-            Members
-        </h3>
 
 
-        <p>
-            ${username}
-        </p>
 
 
-        <p>
-            Waiting...
-        </p>
 
+        <!-- Main Chat -->
 
-        <p>
-            Waiting...
-        </p>
+        <main id="chatArea">
 
 
-    </div>
 
+            <header id="chatHeader">
 
+                <span>
 
-    <div class="sidebar-bottom">
+                    # party-chat
 
+                </span>
 
-        <p>
-            Self Destruct:
-        </p>
+            </header>
 
 
-        <p id="timer">
 
-            05:00
 
-        </p>
 
+            <section
+                id="messages"
+            >
 
+            </section>
 
-        <button id="endBtn">
 
-            End Chat
 
-        </button>
 
 
-    </div>
+            <div
+                id="typing"
+            >
 
+            </div>
 
 
-</div>
 
 
 
+            <footer id="messageBar">
 
 
 
+                <input
 
+                    id="messageInput"
 
-<div class="chat">
+                    placeholder="Message #party-chat"
 
+                    autocomplete="off"
 
-    <div class="chat-header">
+                >
 
 
-        # party-chat
 
+                <button id="sendBtn">
 
-    </div>
+                    Send
 
+                </button>
 
 
 
+            </footer>
 
-    <div class="messages" id="messages">
 
 
-        <p>
+        </main>
 
-        System: Connected
 
-        </p>
-
-
-    </div>
-
-
-
-
-
-    <div class="typing" id="typing">
 
     </div>
 
@@ -361,248 +288,15 @@ menu.innerHTML = `
 
 
 
-    <div class="message-box">
 
+    <!-- Socket.IO -->
 
-        <input
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
 
-        id="messageInput"
 
-        placeholder="Message #party-chat"
+    <!-- Main JS -->
 
-        >
-
-
-
-        <button id="sendBtn">
-
-        Send
-
-        </button>
-
-
-    </div>
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-`;
-
-
-
-
-
-const input =
-document.getElementById("messageInput");
-
-const messages =
-document.getElementById("messages");
-
-const typing =
-document.getElementById("typing");
-
-
-
-
-
-
-
-input.oninput = function(){
-
-
-    if(input.value.length > 0){
-
-
-        typing.innerHTML =
-        username +
-        " is typing...";
-
-
-    }
-
-    else{
-
-
-        typing.innerHTML = "";
-
-
-    }
-
-
-};
-
-
-
-
-
-
-
-
-document
-.getElementById("sendBtn")
-.onclick = function(){
-
-
-
-if(input.value.trim()==="")
-return;
-
-
-
-messages.innerHTML += `
-
-
-<p>
-
-<b>${username}</b>
-
-${input.value}
-
-</p>
-
-
-`;
-
-
-
-input.value="";
-
-typing.innerHTML="";
-
-
-};
-
-
-
-
-
-
-
-
-let time = 300;
-
-
-
-let countdown =
-setInterval(()=>{
-
-
-
-time--;
-
-
-
-let min =
-Math.floor(time/60);
-
-
-let sec =
-time%60;
-
-
-
-document
-.getElementById("timer")
-.innerHTML =
-
-min +
-
-":" +
-
-(sec < 10 ? "0":"") +
-
-sec;
-
-
-
-
-
-if(time <=0){
-
-
-clearInterval(countdown);
-
-destroyChat();
-
-
-}
-
-
-},1000);
-
-
-
-
-
-
-
-
-
-document
-.getElementById("endBtn")
-.onclick=function(){
-
-
-clearInterval(countdown);
-
-destroyChat();
-
-
-};
-
-
-
-
-
-}
-
-
-
-
-
-function destroyChat(){
-
-
-menu.innerHTML = `
-
-
-<h1>
-Chat Destroyed
-</h1>
-
-
-<p>
-All messages deleted.
-</p>
-
-
-<button onclick="location.reload()">
-
-Return
-
-</button>
-
-
-`;
-
-
-}
-
-
-
-
-
-</script>
+    <script src="main.js"></script>
 
 
 </body>
