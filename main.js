@@ -1,48 +1,79 @@
-const menu =
-document.getElementById("menu");
+/*
+====================================
+DISPOSABLE CHAT - MAIN
+====================================
+*/
 
 
-const createBtn =
-document.getElementById("createBtn");
-
-
-const joinBtn =
-document.getElementById("joinBtn");
+console.log("MAIN JS LOADED");
 
 
 
-function generateCode(){
+const menu = document.getElementById("menu");
 
-    const chars =
-    "ABCDEFGHJKLMNPQRSTUVWXYZ123456789";
+const createBtn = document.getElementById("createBtn");
+
+const joinBtn = document.getElementById("joinBtn");
+
+
+
+/*
+====================================
+GENERATE PARTY CODE
+====================================
+*/
+
+function generateCode() {
+
+
+    const characters =
+        "ABCDEFGHJKLMNPQRSTUVWXYZ123456789";
 
 
     let code = "";
 
 
-    for(let i = 0; i < 5; i++){
+    for (let i = 0; i < 5; i++) {
 
-        code += chars[
+
+        code += characters[
+
             Math.floor(
-                Math.random() * chars.length
+
+                Math.random() *
+                characters.length
+
             )
+
         ];
+
 
     }
 
 
     return code;
 
+
 }
 
 
 
 
-createBtn.onclick = () => {
+/*
+====================================
+CREATE PARTY
+====================================
+*/
 
 
-    const code =
-    generateCode();
+createBtn.addEventListener("click", () => {
+
+
+    console.log("Creating party");
+
+
+    const partyCode =
+        generateCode();
 
 
 
@@ -55,12 +86,12 @@ createBtn.onclick = () => {
 
 
         <p>
-            Share this code with your friends
+            Share this code with friends:
         </p>
 
 
         <h2>
-            ${code}
+            ${partyCode}
         </h2>
 
 
@@ -73,26 +104,60 @@ createBtn.onclick = () => {
 
 
 
-    document
-    .getElementById("startBtn")
-    .onclick = () => {
+    const startBtn =
+        document.getElementById("startBtn");
+
+
+
+    startBtn.addEventListener("click", () => {
 
 
         console.log(
-            "Starting chat:",
-            code
+            "Starting party:",
+            partyCode
         );
 
 
-    };
+        menu.innerHTML = `
 
 
-};
+            <h1>
+                Party Lobby
+            </h1>
+
+
+            <p>
+                Code:
+                ${partyCode}
+            </p>
+
+
+            <p>
+                Waiting for players...
+            </p>
+
+
+        `;
+
+
+    });
+
+
+
+});
 
 
 
 
-joinBtn.onclick = () => {
+/*
+====================================
+JOIN PARTY
+====================================
+*/
+
+
+joinBtn.addEventListener("click", () => {
+
 
 
     menu.innerHTML = `
@@ -108,10 +173,10 @@ joinBtn.onclick = () => {
         </p>
 
 
-        <input 
-        id="codeInput"
-        placeholder="XXXXX"
-        maxlength="5"
+        <input
+            id="codeInput"
+            maxlength="5"
+            placeholder="XXXXX"
         >
 
 
@@ -127,26 +192,55 @@ joinBtn.onclick = () => {
 
 
 
-    document
-    .getElementById("joinConfirm")
-    .onclick = () => {
+    const joinConfirm =
+        document.getElementById("joinConfirm");
+
+
+
+    joinConfirm.addEventListener("click", () => {
+
 
 
         const code =
-        document
-        .getElementById("codeInput")
-        .value
-        .toUpperCase();
+            document
+            .getElementById("codeInput")
+            .value
+            .toUpperCase();
 
 
 
         console.log(
-            "Joining:",
+            "Joining party:",
             code
         );
 
 
-    };
+
+        menu.innerHTML = `
 
 
-};
+            <h1>
+                Joining Party
+            </h1>
+
+
+            <p>
+                Code:
+                ${code}
+            </p>
+
+
+            <p>
+                Connecting...
+            </p>
+
+
+        `;
+
+
+
+    });
+
+
+
+});
