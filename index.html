@@ -15,6 +15,7 @@
 
 <div class="menu" id="menu">
 
+
     <h1>
         Disposable Chat
     </h1>
@@ -40,6 +41,8 @@
 
 
 
+
+
 <script>
 
 
@@ -60,13 +63,6 @@ document.getElementById("joinBtn");
 
 
 
-
-
-/*
-====================================
-PARTY CODE
-====================================
-*/
 
 
 function generateCode(){
@@ -99,19 +95,10 @@ function generateCode(){
 
     return code;
 
-
 }
 
 
 
-
-
-
-/*
-====================================
-USERNAME GENERATOR
-====================================
-*/
 
 
 function generateUsername(){
@@ -153,23 +140,11 @@ function generateUsername(){
 
     return (
 
-        first[
-
-            Math.floor(
-                Math.random()*first.length
-            )
-
-        ]
+        first[Math.floor(Math.random()*first.length)]
 
         +
 
-        second[
-
-            Math.floor(
-                Math.random()*second.length
-            )
-
-        ]
+        second[Math.floor(Math.random()*second.length)]
 
     );
 
@@ -181,23 +156,12 @@ function generateUsername(){
 
 
 
-/*
-====================================
-CREATE PARTY
-====================================
-*/
-
-
 createBtn.onclick = function(){
 
 
-    const code =
-    generateCode();
-
-
-
-    openChat(code);
-
+    openChat(
+        generateCode()
+    );
 
 
 };
@@ -207,46 +171,29 @@ createBtn.onclick = function(){
 
 
 
-/*
-====================================
-JOIN PARTY
-====================================
-*/
-
-
 joinBtn.onclick = function(){
 
 
     menu.innerHTML = `
 
 
-        <h1>
-            Join Party
-        </h1>
+    <h1>
+        Join Party
+    </h1>
 
 
-
-        <input
-
-            id="joinCode"
-
-            maxlength="5"
-
-            placeholder="ENTER CODE"
-
-        >
+    <input 
+    id="joinCode"
+    placeholder="ENTER CODE"
+    maxlength="5"
+    >
 
 
+    <button id="joinConfirm">
 
-        <br><br>
+        Join
 
-
-
-        <button id="joinConfirm">
-
-            Join
-
-        </button>
+    </button>
 
 
     `;
@@ -258,25 +205,11 @@ joinBtn.onclick = function(){
     .onclick = function(){
 
 
-
-        const code =
-
+        let code =
         document
         .getElementById("joinCode")
         .value
         .toUpperCase();
-
-
-
-        if(code.length !== 5){
-
-            alert(
-                "Invalid code"
-            );
-
-            return;
-
-        }
 
 
 
@@ -286,6 +219,224 @@ joinBtn.onclick = function(){
 
     };
 
+
+};
+
+
+
+
+
+
+
+function openChat(code){
+
+
+
+const username =
+generateUsername();
+
+
+
+
+menu.innerHTML = `
+
+
+
+<div class="chat-layout">
+
+
+
+
+
+<div class="sidebar">
+
+
+    <div class="server-title">
+
+        Party ${code}
+
+    </div>
+
+
+
+    <div class="members">
+
+
+        <h3>
+            Members
+        </h3>
+
+
+        <p>
+            ${username}
+        </p>
+
+
+        <p>
+            Waiting...
+        </p>
+
+
+        <p>
+            Waiting...
+        </p>
+
+
+    </div>
+
+
+
+    <div class="sidebar-bottom">
+
+
+        <p>
+            Self Destruct:
+        </p>
+
+
+        <p id="timer">
+
+            05:00
+
+        </p>
+
+
+
+        <button id="endBtn">
+
+            End Chat
+
+        </button>
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="chat">
+
+
+    <div class="chat-header">
+
+
+        # party-chat
+
+
+    </div>
+
+
+
+
+
+    <div class="messages" id="messages">
+
+
+        <p>
+
+        System: Connected
+
+        </p>
+
+
+    </div>
+
+
+
+
+
+    <div class="typing" id="typing">
+
+    </div>
+
+
+
+
+
+    <div class="message-box">
+
+
+        <input
+
+        id="messageInput"
+
+        placeholder="Message #party-chat"
+
+        >
+
+
+
+        <button id="sendBtn">
+
+        Send
+
+        </button>
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+`;
+
+
+
+
+
+const input =
+document.getElementById("messageInput");
+
+const messages =
+document.getElementById("messages");
+
+const typing =
+document.getElementById("typing");
+
+
+
+
+
+
+
+input.oninput = function(){
+
+
+    if(input.value.length > 0){
+
+
+        typing.innerHTML =
+        username +
+        " is typing...";
+
+
+    }
+
+    else{
+
+
+        typing.innerHTML = "";
+
+
+    }
 
 
 };
@@ -297,314 +448,117 @@ joinBtn.onclick = function(){
 
 
 
+document
+.getElementById("sendBtn")
+.onclick = function(){
 
-/*
-====================================
-CHAT ROOM
-====================================
-*/
 
 
-function openChat(code){
+if(input.value.trim()==="")
+return;
 
 
 
-    const username =
-    generateUsername();
+messages.innerHTML += `
 
 
+<p>
 
-    menu.innerHTML = `
+<b>${username}</b>
 
+${input.value}
 
+</p>
 
-        <h1>
-            Party ${code}
-        </h1>
 
+`;
 
 
-        <p>
-            You are:
-            <b>${username}</b>
-        </p>
 
+input.value="";
 
+typing.innerHTML="";
 
 
-        <p id="timer">
+};
 
-            Time Remaining:
-            05:00
 
-        </p>
 
 
 
 
 
-        <div id="messages">
 
+let time = 300;
 
-            <p>
-                System:
-                Connected
-            </p>
 
 
-        </div>
+let countdown =
+setInterval(()=>{
 
 
 
+time--;
 
 
-        <p id="typing">
 
-        </p>
+let min =
+Math.floor(time/60);
 
 
+let sec =
+time%60;
 
 
 
-        <input
+document
+.getElementById("timer")
+.innerHTML =
 
-            id="messageInput"
+min +
 
-            placeholder="Type message..."
+":" +
 
-        >
+(sec < 10 ? "0":"") +
 
+sec;
 
 
 
-        <button id="sendBtn">
 
-            Send
 
-        </button>
+if(time <=0){
 
 
+clearInterval(countdown);
 
+destroyChat();
 
-        <button id="endBtn">
 
-            End Chat
+}
 
-        </button>
 
+},1000);
 
 
-    `;
 
 
 
 
 
-    const input =
-    document.getElementById("messageInput");
 
 
+document
+.getElementById("endBtn")
+.onclick=function(){
 
-    const messages =
-    document.getElementById("messages");
 
+clearInterval(countdown);
 
+destroyChat();
 
-    const typing =
-    document.getElementById("typing");
 
-
-
-
-
-    /*
-    ================================
-    SELF DESTRUCT TIMER
-    ================================
-    */
-
-
-    let timeLeft = 300;
-
-
-
-    const timer =
-    setInterval(() => {
-
-
-
-        timeLeft--;
-
-
-
-        let minutes =
-        Math.floor(timeLeft / 60);
-
-
-
-        let seconds =
-        timeLeft % 60;
-
-
-
-        document
-        .getElementById("timer")
-        .innerHTML =
-
-        "Time Remaining: "
-
-        +
-
-        minutes
-
-        +
-
-        ":"
-
-        +
-
-        (seconds < 10 ? "0" : "")
-
-        +
-
-        seconds;
-
-
-
-
-        if(timeLeft <= 0){
-
-
-
-            clearInterval(timer);
-
-
-            destroyChat();
-
-
-
-        }
-
-
-
-    },1000);
-
-
-
-
-
-
-
-
-    /*
-    ================================
-    TYPING
-    ================================
-    */
-
-
-    input.oninput = function(){
-
-
-
-        if(input.value.length > 0){
-
-
-            typing.innerHTML =
-            username +
-            " is typing...";
-
-
-        }
-
-        else{
-
-
-            typing.innerHTML = "";
-
-
-        }
-
-
-
-    };
-
-
-
-
-
-
-
-    /*
-    ================================
-    SEND MESSAGE
-    ================================
-    */
-
-
-    document
-    .getElementById("sendBtn")
-    .onclick = function(){
-
-
-
-        if(input.value.trim() === "")
-            return;
-
-
-
-
-        messages.innerHTML += `
-
-
-            <p>
-
-            <b>${username}:</b>
-
-            ${input.value}
-
-            </p>
-
-
-        `;
-
-
-
-
-        input.value = "";
-
-        typing.innerHTML = "";
-
-
-
-    };
-
-
-
-
-
-
-
-    /*
-    ================================
-    END CHAT
-    ================================
-    */
-
-
-    document
-    .getElementById("endBtn")
-    .onclick = function(){
-
-
-        clearInterval(timer);
-
-
-        destroyChat();
-
-
-    };
-
+};
 
 
 
@@ -619,34 +573,32 @@ function openChat(code){
 function destroyChat(){
 
 
-
-    menu.innerHTML = `
-
-
-        <h1>
-            Chat Destroyed
-        </h1>
+menu.innerHTML = `
 
 
-
-        <p>
-            All messages have been deleted.
-        </p>
-
+<h1>
+Chat Destroyed
+</h1>
 
 
-        <button onclick="location.reload()">
-
-            Return
-
-        </button>
+<p>
+All messages deleted.
+</p>
 
 
+<button onclick="location.reload()">
 
-    `;
+Return
+
+</button>
+
+
+`;
 
 
 }
+
+
 
 
 
