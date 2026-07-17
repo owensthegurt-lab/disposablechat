@@ -19,6 +19,7 @@
         Disposable Chat
     </h1>
 
+
     <p>
         Temporary conversations.
         No history saved.
@@ -42,7 +43,7 @@
 <script>
 
 
-console.log("CHAT SYSTEM LOADED");
+console.log("DISPOSABLE CHAT LOADED");
 
 
 
@@ -58,6 +59,14 @@ const joinBtn =
 document.getElementById("joinBtn");
 
 
+
+
+
+/*
+====================================
+PARTY CODE
+====================================
+*/
 
 
 function generateCode(){
@@ -96,6 +105,82 @@ function generateCode(){
 
 
 
+
+
+/*
+====================================
+USERNAME GENERATOR
+====================================
+*/
+
+
+function generateUsername(){
+
+
+    const first = [
+
+        "Silent",
+        "Golden",
+        "Shadow",
+        "Frozen",
+        "Swift",
+        "Dark",
+        "Bright",
+        "Hidden",
+        "Wild",
+        "Silver"
+
+    ];
+
+
+
+    const second = [
+
+        "Wolf",
+        "Fox",
+        "River",
+        "Tree",
+        "Moon",
+        "Storm",
+        "Leaf",
+        "Bear",
+        "Fire",
+        "Cloud"
+
+    ];
+
+
+
+    return (
+
+        first[
+
+            Math.floor(
+                Math.random()*first.length
+            )
+
+        ]
+
+        +
+
+        second[
+
+            Math.floor(
+                Math.random()*second.length
+            )
+
+        ]
+
+    );
+
+
+}
+
+
+
+
+
+
 /*
 ====================================
 CREATE PARTY
@@ -110,10 +195,13 @@ createBtn.onclick = function(){
     generateCode();
 
 
+
     openChat(code);
 
 
+
 };
+
 
 
 
@@ -137,18 +225,21 @@ joinBtn.onclick = function(){
         </h1>
 
 
+
         <input
 
             id="joinCode"
 
-            placeholder="ENTER CODE"
-
             maxlength="5"
+
+            placeholder="ENTER CODE"
 
         >
 
 
+
         <br><br>
+
 
 
         <button id="joinConfirm">
@@ -159,7 +250,6 @@ joinBtn.onclick = function(){
 
 
     `;
-
 
 
 
@@ -178,20 +268,15 @@ joinBtn.onclick = function(){
 
 
 
-
         if(code.length !== 5){
 
-
             alert(
-                "Enter a 5 character code"
+                "Invalid code"
             );
-
 
             return;
 
-
         }
-
 
 
 
@@ -211,6 +296,8 @@ joinBtn.onclick = function(){
 
 
 
+
+
 /*
 ====================================
 CHAT ROOM
@@ -222,7 +309,13 @@ function openChat(code){
 
 
 
+    const username =
+    generateUsername();
+
+
+
     menu.innerHTML = `
+
 
 
         <h1>
@@ -231,10 +324,30 @@ function openChat(code){
 
 
 
+        <p>
+            You are:
+            <b>${username}</b>
+        </p>
+
+
+
+
+        <p id="timer">
+
+            Time Remaining:
+            05:00
+
+        </p>
+
+
+
+
+
         <div id="messages">
 
 
             <p>
+                System:
                 Connected
             </p>
 
@@ -243,9 +356,13 @@ function openChat(code){
 
 
 
+
+
         <p id="typing">
 
         </p>
+
+
 
 
 
@@ -259,11 +376,13 @@ function openChat(code){
 
 
 
+
         <button id="sendBtn">
 
             Send
 
         </button>
+
 
 
 
@@ -286,10 +405,102 @@ function openChat(code){
 
 
 
+    const messages =
+    document.getElementById("messages");
+
+
+
     const typing =
     document.getElementById("typing");
 
 
+
+
+
+    /*
+    ================================
+    SELF DESTRUCT TIMER
+    ================================
+    */
+
+
+    let timeLeft = 300;
+
+
+
+    const timer =
+    setInterval(() => {
+
+
+
+        timeLeft--;
+
+
+
+        let minutes =
+        Math.floor(timeLeft / 60);
+
+
+
+        let seconds =
+        timeLeft % 60;
+
+
+
+        document
+        .getElementById("timer")
+        .innerHTML =
+
+        "Time Remaining: "
+
+        +
+
+        minutes
+
+        +
+
+        ":"
+
+        +
+
+        (seconds < 10 ? "0" : "")
+
+        +
+
+        seconds;
+
+
+
+
+        if(timeLeft <= 0){
+
+
+
+            clearInterval(timer);
+
+
+            destroyChat();
+
+
+
+        }
+
+
+
+    },1000);
+
+
+
+
+
+
+
+
+    /*
+    ================================
+    TYPING
+    ================================
+    */
 
 
     input.oninput = function(){
@@ -300,7 +511,8 @@ function openChat(code){
 
 
             typing.innerHTML =
-            "You are typing...";
+            username +
+            " is typing...";
 
 
         }
@@ -308,8 +520,7 @@ function openChat(code){
         else{
 
 
-            typing.innerHTML =
-            "";
+            typing.innerHTML = "";
 
 
         }
@@ -321,6 +532,14 @@ function openChat(code){
 
 
 
+
+
+
+    /*
+    ================================
+    SEND MESSAGE
+    ================================
+    */
 
 
     document
@@ -335,17 +554,14 @@ function openChat(code){
 
 
 
-        const messages =
-        document.getElementById("messages");
-
-
-
         messages.innerHTML += `
 
 
             <p>
 
-            You: ${input.value}
+            <b>${username}:</b>
+
+            ${input.value}
 
             </p>
 
@@ -368,39 +584,66 @@ function openChat(code){
 
 
 
+
+    /*
+    ================================
+    END CHAT
+    ================================
+    */
+
+
     document
     .getElementById("endBtn")
     .onclick = function(){
 
 
-
-        menu.innerHTML = `
-
-
-            <h1>
-                Chat Ended
-            </h1>
+        clearInterval(timer);
 
 
-            <p>
-                Chat history deleted.
-            </p>
-
-
-
-            <button onclick="location.reload()">
-
-                Return
-
-            </button>
-
-
-        `;
-
+        destroyChat();
 
 
     };
 
+
+
+
+
+
+}
+
+
+
+
+
+function destroyChat(){
+
+
+
+    menu.innerHTML = `
+
+
+        <h1>
+            Chat Destroyed
+        </h1>
+
+
+
+        <p>
+            All messages have been deleted.
+        </p>
+
+
+
+        <button onclick="location.reload()">
+
+            Return
+
+        </button>
+
+
+
+    `;
 
 
 }
